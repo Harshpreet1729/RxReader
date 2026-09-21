@@ -33,7 +33,7 @@ def build():
     def code(s): cells.append({'cell_type':'code','metadata':{},'source':s.splitlines(True),'execution_count':None,'outputs':[]})
     md('''# Train TrOCR-base on RxHandBD
 Version 2: live progress, streaming logs, and cancellation cleanup.
-Training was explicitly requested on 2026-09-21. **Run all starts real GPU training** after GPU selection and Drive authorization. No payment or subscription is requested.
+**Run all starts real GPU training** after GPU selection and Drive authorization. No payment or subscription is requested.
 
 1. Open this notebook in Google Colab (File > Upload notebook).
 2. Runtime > Change runtime type > select a GPU (T4 is a reasonable starting point).
