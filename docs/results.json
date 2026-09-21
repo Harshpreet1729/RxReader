@@ -1,0 +1,48 @@
+{
+  "validation": {
+    "small_pretrained": {
+      "samples": 444,
+      "raw_cer": 0.6637369791666666,
+      "raw_wer": 1.082514734774067,
+      "raw_exact_match": 0.036036036036036036,
+      "normalized_cer": 0.5953776041666666,
+      "normalized_wer": 1.0216110019646365,
+      "normalized_exact_match": 0.0990990990990991
+    },
+    "base_pretrained": {
+      "samples": 444,
+      "raw_cer": 0.6331380208333334,
+      "raw_wer": 1.3673870333988212,
+      "raw_exact_match": 0.06531531531531531,
+      "normalized_cer": 0.5439453125,
+      "normalized_wer": 1.2593320235756384,
+      "normalized_exact_match": 0.12162162162162163
+    },
+    "base_finetuned": {
+      "samples": 444,
+      "raw_cer": 0.19889322916666666,
+      "raw_wer": 0.593320235756385,
+      "raw_exact_match": 0.39414414414414417,
+      "normalized_cer": 0.16569010416666666,
+      "normalized_wer": 0.5068762278978389,
+      "normalized_exact_match": 0.48873873873873874
+    }
+  },
+  "test": {
+    "samples": 1111,
+    "metrics": {
+      "samples": 1111,
+      "raw_cer": 0.32055319731617143,
+      "raw_wer": 0.6934306569343066,
+      "raw_exact_match": 0.34293429342934295,
+      "normalized_cer": 0.28782692044365327,
+      "normalized_wer": 0.6220600162206001,
+      "normalized_exact_match": 0.41224122412241226
+    }
+  },
+  "notes": [
+    "Frozen RxHandBD image splits; no writer IDs available.",
+    "Validation used for model selection; test evaluated afterwards.",
+    "Baseline models were pretrained, not separately fine-tuned."
+  ]
+}

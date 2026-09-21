@@ -1,0 +1,12 @@
+# Python 3.11 recommended for cloud GPU + optional PaddleOCR compatibility.
+torch>=2.6,<3
+torchvision>=0.21,<1
+transformers==4.57.6
+accelerate==1.15.0
+sentencepiece==0.2.2
+Pillow>=11,<13
+numpy>=1.26,<3
+requests>=2.32,<3
+PyYAML>=6,<7
+gradio==5.50.0
+protobuf>=4,<8

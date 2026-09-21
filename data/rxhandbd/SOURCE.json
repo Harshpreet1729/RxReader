@@ -1,0 +1,15 @@
+{
+  "name": "RxHandBD",
+  "url": "https://zenodo.org/records/18478741",
+  "doi": "10.5281/zenodo.18478741",
+  "publication_date": "2026-02-04",
+  "publisher_license_id": "mit-license",
+  "author": "Md. Masudul Islam",
+  "download_url": "https://zenodo.org/api/records/18478741/files/RxHandBD.zip/content",
+  "archive_md5": "c096859fcccb33655edaf34e4c1e7a06",
+  "archive_sha256": "25d31c7bc1ceab4b3707d5e6d2205e518cadbd75d2f99efe1492a1aee5ef1951",
+  "preparation_seed": 42,
+  "label_semantics": "verbatim word transcription; NOT validated medicine or generic identity",
+  "generic_name_annotations": false,
+  "writer_and_document_ids": false
+}

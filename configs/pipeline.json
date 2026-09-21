@@ -1,0 +1,12 @@
+{
+  "model_id": "microsoft/trocr-small-handwritten",
+  "model_revision": "b4648cfa171985a6745f37ddd637e98c0da958ac",
+  "dataset_root": "Dataset/RxHandBD",
+  "output_dir": "checkpoints/trocr_rxhandbd",
+  "max_target_length": 64,
+  "epochs": 5,
+  "learning_rate": 5e-05,
+  "batch_size": 2,
+  "gradient_accumulation_steps": 8,
+  "seed": 42
+}

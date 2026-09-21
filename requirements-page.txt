@@ -1,0 +1,6 @@
+-r requirements.txt
+# Optional automatic page text detection; install in Python 3.11.
+paddleocr>=3.3,<4
+paddlepaddle>=3.2,<4
+# Compatible with requests 2.32.x used by Paddle dependencies.
+chardet>=5.2,<6
