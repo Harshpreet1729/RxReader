@@ -1,13 +1,20 @@
 """Opt-in structured progress; normal CLI/audit output stays backward-compatible."""
+
 import json
 import os
 
-PREFIX = '@@RX_PROGRESS@@'
+PREFIX = "@@RX_PROGRESS@@"
 
 
 def emit(stage, current=None, total=None, **details):
-    if os.environ.get('RX_PROGRESS') == '1':
-        print(PREFIX + json.dumps({'stage':stage,'current':current,'total':total,**details}),flush=True)
+    if os.environ.get("RX_PROGRESS") == "1":
+        print(
+            PREFIX
+            + json.dumps(
+                {"stage": stage, "current": current, "total": total, **details}
+            ),
+            flush=True,
+        )
 
 
 def progress_rows(rows, stage, every=50):

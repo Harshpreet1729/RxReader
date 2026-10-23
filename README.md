@@ -1,110 +1,129 @@
-# RxReader â€” Handwritten Prescription OCR
+# RxReader - Prescription OCR
 
-A Python research prototype for reading handwritten prescription crops, reviewing alternative readings, and retrieving source-backed medicine information after spelling confirmation.
+A Python ML project that reads handwritten medicine text, lets you review it,
+and retrieves medicine information from named sources. The main website uses
+**Django, HTML, CSS and a small amount of JavaScript**. React is not required.
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Harshpreet1729/Prescription-Scanner-Medicine-Identifier/blob/main/notebooks/RxHandBD_TrOCR_Base_Colab.ipynb)
+**Start learning here: [Understand the project](docs/UNDERSTAND_THE_PROJECT.md).**
+It explains the code flow, training, results and interview questions.
 
-![Prescription review workspace](docs/assets/workspace.png)
+## How it works
 
-## What it does
+```text
+Upload image -> Find text regions -> TrOCR -> Extract written fields
+             -> Review/correct text -> Confirm medicine -> Source lookup
+```
 
-- Fine-tunes **TrOCR-base-handwritten** on reproducibly prepared RxHandBD word crops.
-- Reads individual crops, manually defined page regions, or regions from optional PaddleOCR detection.
-- Shows raw readings, alternatives, literal strength/schedule fields, and review status.
-- Retrieves generic ingredients through exact RxNorm lookup and published uses from a user-selected DailyMed label.
-- Provides a responsive Gradio interface and a self-contained Colab training notebook with live progress, persistent checkpoints, and resume support.
+- Read a word crop or a full page with automatic/manual regions.
+- Correct readings and link separate medicine/instruction regions.
+- Extract written strengths and explicit daily frequencies; leave unclear values unknown.
+- Look up a confirmed name through RxNorm and a selected DailyMed product label.
+- Export/reopen review JSON, with background OCR progress in Django.
+- Fine-tune and evaluate TrOCR using the included Colab notebook.
 
-This is **not a clinical decision system**. It can misread medicine names, cannot certify a prescription, and does not recommend doses or treatment. Review every result against the original image.
+The OCR model generates text. Field extraction is Python rules; medicine uses
+come from source labels. This is a local prototype, not a clinical decision tool.
+Indian brand coverage and full-page accuracy are not established.
 
-## Measured results
+## Run the website
 
-Normalized metrics ignore case and normalize whitespace; CER is character error rate. Lower CER is better. Exact match means the entire transcription matches.
+Use Python 3.11 for a new environment. Run commands from the project root:
 
-| Model | Split | Images | CER | Exact match |
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install -r requirements-web.txt
+python -m webapp runserver 127.0.0.1:8000 --noreload --insecure
+```
+
+Open [the local website](http://127.0.0.1:8000/). In an existing configured
+`.venv`, activate it and run the last command. This command is for local use.
+
+The fine-tuned weights are not included in Git. Put the complete exported
+`best` folder in `checkpoints/trocr_base_rxhandbd/best`, then copy
+`configs/app.example.json` to `configs/app.json`. A fresh clone without this
+local configuration uses pretrained TrOCR-small, which does **not** reproduce
+the fine-tuned results below. Keep tokenizer/processor files with the weights.
+
+The optional Gradio demo is smaller and useful for exploring the basic flow:
+
+```powershell
+python -m app.gradio_app
+```
+
+Open [Gradio](http://127.0.0.1:7860/). Both interfaces use the same OCR and
+extraction modules. Images stay local; confirmed names and label IDs go to NLM
+for lookup. Django uploads expire after 30 minutes or on server restart.
+
+## Results already measured
+
+| Model | Split | Images | Normalized CER | Exact match |
 |---|---|---:|---:|---:|
 | Pretrained TrOCR-small | Validation | 444 | 59.54% | 9.91% |
 | Pretrained TrOCR-base | Validation | 444 | 54.39% | 12.16% |
 | Fine-tuned TrOCR-base | Validation | 444 | **16.57%** | **48.87%** |
-| Fine-tuned TrOCR-base | Held-out test | 1,111 | **28.78%** | **41.22%** |
+| Fine-tuned TrOCR-base | Test | 1,111 | **28.78%** | **41.22%** |
 
-Fine-tuning reduced validation CER by **72.2% relative to the pretrained small baseline**. This does not establish superiority over a separately fine-tuned small model. Test performance is lower than validation performance; neither split establishes writer independence or full-page accuracy. See [results and limitations](docs/MODEL_CARD.md) and [machine-readable metrics](docs/results.json).
+CER measures character edits; lower is better. Exact match requires the whole
+transcription to match. Normalization ignores case and normalizes whitespace
+and Unicode. These are word-crop results, not whole-prescription accuracy.
+There is no comparison against a separately fine-tuned small model.
+See [model limitations](docs/MODEL_CARD.md) and [saved metrics](docs/results.json).
 
-## Run locally
+## Code map
 
-Use Python 3.11 in a fresh environment. From the project root:
+| Folder | Purpose |
+|---|---|
+| `src/prescription/` | OCR, detection, extraction, lookup, data and metrics |
+| `webapp/` | Main Django website and temporary background jobs |
+| `app/` | Optional Gradio demo and presentation |
+| `scripts/` | Inference, data checks, training and evaluation commands |
+| `configs/` | Model paths and training settings |
+| `notebooks/` | One self-contained Colab training notebook |
+| `tests/` | Backend regression tests; Django tests are in `webapp/tests.py` |
+| `data/` | Dataset provenance and reproducible split checksums |
+| `docs/` | Learning guide, setup details and results |
 
-```bash
-python -m venv .venv
-# Windows PowerShell
-.venv\Scripts\Activate.ps1
-# macOS/Linux: source .venv/bin/activate
-python -m pip install -r requirements.txt
-python -m app.gradio_app
-```
+Local `Dataset/`, `checkpoints/` and `test_images/` contain the datasets, current
+trained model and demo images. They are excluded from Git. Commands create
+`outputs/` for new reports and `.cache/` for downloaded dependencies when needed.
+Old model experiments, duplicate exports and stale reports have been removed.
 
-Open **http://127.0.0.1:7860**. A fresh clone uses the public pretrained small checkpoint and downloads it on first inference. **That default does not reproduce the fine-tuned results above.**
+## Training and checks
 
-For the fine-tuned model, export the complete `best` folder from your completed Colab run, place it under `checkpoints/trocr_base_rxhandbd/best`, and run:
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Harshpreet1729/Prescription-Scanner-Medicine-Identifier/blob/main/notebooks/RxHandBD_TrOCR_Base_Colab.ipynb)
 
-```bash
-python -m app.gradio_app --model checkpoints/trocr_base_rxhandbd/best
-```
+The badge opens the GitHub version. For local changes that have not been pushed,
+upload `notebooks/RxHandBD_TrOCR_Base_Colab.ipynb` directly to Colab.
+**Run all starts training** after GPU selection and Drive authorization.
+See [Colab setup](docs/COLAB_TRAINING.md).
 
-The fine-tuned weights are not distributed in Git. To select a local default, copy `configs/app.example.json` to `configs/app.json` after installing the model. Images stay local in the local app; confirmed medicine names and label IDs are sent to NLM. Local brands may have no exact match.
-
-## Train in Colab
-
-Use the **Open in Colab** button above, select a GPU, and run the cells. The notebook:
-
-1. Downloads the pinned publisher archive and verifies checksums/split hashes.
-2. Saves reports and checkpoints to an authorized Google Drive folder.
-3. Measures pretrained validation baselines, then fine-tunes TrOCR-base.
-4. Shows actual training/validation progress, loss and streamed logs.
-5. Compares validation metrics and offers optional held-out testing/model export.
-
-**Run all starts training.** Free Colab GPU availability is not guaranteed. See [Colab instructions](docs/COLAB_TRAINING.md). The notebook only installs dependencies and trains after you run it; opening it alone does neither.
-
-## Data and command-line tools
-
-RxHandBD provides 5,578 original word-crop images. Prepared splits contain 3,994 training, 444 validation and 1,111 test examples; 12 ambiguous/conflicting examples are quarantined and 17 redundant copies excluded from active splits. All source images and transcriptions are preserved locally.
-
-```bash
-python -m scripts.download_dataset
+```powershell
 python -m scripts.audit_dataset
-python -m scripts.train                         # preflight only
-python -m scripts.train --config configs/colab_base.json --execute  # requires CUDA
-python -m scripts.evaluate --model checkpoints/trocr_base_rxhandbd/best --split validation
-python -m scripts.infer --image path/to/crop.jpg --model checkpoints/trocr_base_rxhandbd/best
+python -m scripts.train --config configs/colab_base.json  # checks only
 python -m unittest discover -s tests -v
+python -m unittest webapp.tests -v
 ```
 
-For automatic page detection, install `requirements-page.txt`. See [runbook](docs/RUNBOOK.md), [data provenance](data/rxhandbd/README.md), and [model card](docs/MODEL_CARD.md).
+Detailed commands: [runbook](docs/RUNBOOK.md).
+Website details: [Django guide](docs/DJANGO_WORKSPACE.md).
+Future page annotation work: [page data guide](docs/PUBLIC_PAGE_DATA.md).
+The 20-page annotation batch contains draft model readings, not verified
+training labels; it has not produced a new trained model.
 
-## Structure
+Optional formatting tools: install `requirements-dev.txt`, then run
+`python -m black app src scripts tests webapp --workers 1`.
+After editing embedded training/backend sources, rebuild the notebook with
+`python -m scripts.build_colab` before running tests or uploading to Colab.
 
-```text
-app/                  Gradio layout, styles and escaped result presentation
-src/prescription/     OCR, region detection, extraction, retrieval and metrics
-scripts/              Data preparation, training, evaluation and inference
-configs/              Reproducible model settings and local app example
-notebooks/            Self-contained Colab training workflow
-data/rxhandbd/        Public provenance and frozen split checksums
-docs/                 Setup, model limitations, results and UI preview
-tests/                Pipeline, progress and presentation regression tests
-```
+## Credits
 
-The frontend is currently Gradio. React is a future frontend option; recognition and retrieval already live in separate Python modules. No React frontend or dedicated REST backend is claimed.
+- [RxHandBD](https://doi.org/10.5281/zenodo.18478741), Md. Masudul Islam;
+  [retained provenance](data/rxhandbd/README.md).
+- [Microsoft TrOCR](https://github.com/microsoft/unilm/tree/master/trocr),
+  Hugging Face Transformers and PyTorch.
+- [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR),
+  [RxNorm](https://lhncbc.nlm.nih.gov/RxNav/) and
+  [DailyMed](https://dailymed.nlm.nih.gov/).
 
-## Checks and scope
-
-The current suite contains **25 tests**, including extraction behavior, source retrieval failures, metric calculations, training guards, notebook consistency, cancellation and HTML escaping. Desktop/mobile browser checks cover real OCR, live lookup, result clearing, and layout overflow.
-
-Datasets, trained checkpoints, caches, exports, local experiment logs and personal documents are deliberately excluded from Git. The original implementation remains in repository history; local legacy assets are archived rather than silently deleted.
-
-## Acknowledgments
-
-- [RxHandBD](https://doi.org/10.5281/zenodo.18478741), Md. Masudul Islam; publisher-declared MIT license. See retained publisher metadata for dataset terms.
-- [Microsoft TrOCR](https://github.com/microsoft/unilm/tree/master/trocr) and [Hugging Face checkpoint](https://huggingface.co/microsoft/trocr-base-handwritten).
-- [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR), [RxNorm](https://lhncbc.nlm.nih.gov/RxNav/) and [DailyMed](https://dailymed.nlm.nih.gov/).
-
-Third-party data, model weights and services retain their own licenses and terms. Public source availability does not establish clinical suitability.
+Third-party datasets, weights and services retain their own terms and licenses.

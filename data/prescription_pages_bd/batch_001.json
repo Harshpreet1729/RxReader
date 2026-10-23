@@ -1,0 +1,441 @@
+{
+  "schema_version": 1,
+  "selection": "First 22 numeric source pages excluding 4 and 15 after visual screening; pilot annotation convenience sample, not a representative evaluation split.",
+  "source": "https://data.mendeley.com/datasets/k62rfd23kz/2",
+  "excluded": [
+    {
+      "page_id": "4",
+      "reason": "Source medicine box appears to cover an examination note, not a medicine."
+    },
+    {
+      "page_id": "15",
+      "reason": "Source medicine boxes cover Endoscopy/Colonoscopy procedure text."
+    }
+  ],
+  "pages": [
+    {
+      "page_id": "1",
+      "retain_box": [
+        421,
+        307,
+        809,
+        1051
+      ],
+      "redactions": [],
+      "image_size": [
+        809,
+        1055
+      ],
+      "source_image_sha256": "f0c6ea3b2489a04ef32fb5d2a3494159fef985022fda4c9acc1d09411b488efc",
+      "source_review_sha256": "021d5cf06c1ca2d33c935f76739059022ceb45ac8fd6524e283601636d0796fb",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "2",
+      "retain_box": [
+        204,
+        175,
+        917,
+        589
+      ],
+      "redactions": [],
+      "image_size": [
+        917,
+        1196
+      ],
+      "source_image_sha256": "ddb6ea59644bbf13d9cab6d53030d4dd12c4f604b87d25baff321e28f86e295e",
+      "source_review_sha256": "4f1ea353d9bf58371e5cca706784b3f82b61eb26a940c79ce45f4487c57f1584",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "3",
+      "retain_box": [
+        400,
+        296,
+        1017,
+        890
+      ],
+      "redactions": [],
+      "image_size": [
+        1017,
+        1259
+      ],
+      "source_image_sha256": "9a653a604b9bdd4b10ed2b36c546f609ecae270202b038e639ed9fb608d85ed0",
+      "source_review_sha256": "5b6775050c9ffffb677ef43760c0af3e37b50a2089f17080af852418ce6de66a",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "5",
+      "retain_box": [
+        630,
+        231,
+        944,
+        586
+      ],
+      "redactions": [],
+      "image_size": [
+        944,
+        1156
+      ],
+      "source_image_sha256": "e5c922a548c51e3452497ee51e76b088716403b26a7612bc6f30606b013012da",
+      "source_review_sha256": "2e3408e59cd6dd7345c22857eae32eab859e7ed7c57322d50846615f3f6ca777",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "6",
+      "retain_box": [
+        486,
+        311,
+        960,
+        909
+      ],
+      "redactions": [],
+      "image_size": [
+        960,
+        1218
+      ],
+      "source_image_sha256": "c9955fe7cd35404c5904825cbe105250c666771b429e82ac9bf751bdd1919b6d",
+      "source_review_sha256": "392f01b6c2c149d5d8d7f635b42816799a4659ee832069ef9719971486397208",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "7",
+      "retain_box": [
+        48,
+        0,
+        588,
+        560
+      ],
+      "redactions": [],
+      "image_size": [
+        588,
+        603
+      ],
+      "source_image_sha256": "48a87adba8ac8b2b5dfc6f53b8badbb6638a69cb9c628ac2ae6e5bd46c44b0e5",
+      "source_review_sha256": "0c85ac6b05892195ac402fbe70bd41df781826588c7577719d89fa4bee65887a",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "8",
+      "retain_box": [
+        241,
+        31,
+        640,
+        189
+      ],
+      "redactions": [],
+      "image_size": [
+        640,
+        244
+      ],
+      "source_image_sha256": "1be70a303df08ce2c595d2b3df0551bbdc67d28dbc7e94a1a7f69968766f73c4",
+      "source_review_sha256": "38f6e3d1e1c067206bfaf4fdb74f2c007fad813162952390d5b5a78b20edd5b3",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "9",
+      "retain_box": [
+        404,
+        331,
+        928,
+        1019
+      ],
+      "redactions": [],
+      "image_size": [
+        928,
+        1127
+      ],
+      "source_image_sha256": "f59070767c010ba4ab4ab9e487d0b1e28bfa9b62ee003e470b0898bd9476a793",
+      "source_review_sha256": "3877125571b5958ca36ec4f03fe6c42e8f0a15725105b8cdb00a4971832738a3",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "10",
+      "retain_box": [
+        644,
+        247,
+        960,
+        462
+      ],
+      "redactions": [],
+      "image_size": [
+        960,
+        854
+      ],
+      "source_image_sha256": "9bac3dc8b46525c5c007e940551f0e2d90159e181a777fc2c64069b0119a52a6",
+      "source_review_sha256": "c950ddd8a413d76caa47b2de3447aa9e98355c740f9efbaf7e44f4703179bb76",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "11",
+      "retain_box": [
+        93,
+        27,
+        640,
+        329
+      ],
+      "redactions": [],
+      "image_size": [
+        640,
+        386
+      ],
+      "source_image_sha256": "67c587c04fd0107bc656d10b8c453691d3da07f5f81d0a4aca4bd17cf8151fc6",
+      "source_review_sha256": "6c62e6936e232f6a062c115e85e1747b306c136121c5df38ce54bf1c4b3d9346",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "12",
+      "retain_box": [
+        432,
+        3,
+        989,
+        485
+      ],
+      "redactions": [],
+      "image_size": [
+        989,
+        839
+      ],
+      "source_image_sha256": "12b2ee377471e74957ac3eae5069571d4b6bd990c55e6c717e63a256876d5710",
+      "source_review_sha256": "79dab0823c15539a2368c0a88a12ab759f14f7ec96e252b88c8fdfb3ca543f20",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth.",
+        "Crossed-out or edited entry visible: adjudicate which entries remain active before labelling."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "13",
+      "retain_box": [
+        439,
+        21,
+        887,
+        395
+      ],
+      "redactions": [],
+      "image_size": [
+        887,
+        807
+      ],
+      "source_image_sha256": "7b89c05c6b1cf94d9f68f2f09b4435c5238fd8c0c143eade7b01f577e4eaf283",
+      "source_review_sha256": "eca3dd5165b33af17ee5403d88efa9103fc86d1e21c18f46371ff50d63eb0dfc",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "14",
+      "retain_box": [
+        484,
+        123,
+        899,
+        749
+      ],
+      "redactions": [],
+      "image_size": [
+        899,
+        876
+      ],
+      "source_image_sha256": "5a4339aeb3ab6c36999fb15ec6fb3356746e805bdd46c42b3301c4975dbc2f5b",
+      "source_review_sha256": "86eedc4fc495cf6080b2e0432912d62679e06d40deee3b56ee4c5c6e13953af2",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "16",
+      "retain_box": [
+        367,
+        74,
+        786,
+        700
+      ],
+      "redactions": [],
+      "image_size": [
+        786,
+        769
+      ],
+      "source_image_sha256": "f6b49c8e9648459e14c13154c6f765c8b2e6cfdc1134042ea91ffbfa9c0151d1",
+      "source_review_sha256": "a663bdc210c704e821b16d1390018e53cad214784a5034b9ab945654e5017863",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "17",
+      "retain_box": [
+        119,
+        54,
+        761,
+        430
+      ],
+      "redactions": [],
+      "image_size": [
+        761,
+        740
+      ],
+      "source_image_sha256": "7b799343affc2e7b1a6e0c2b3fb4c08d597ee1a3dbc2379a65b434c63dceb9f6",
+      "source_review_sha256": "5c24b882e2a830182c21a6983046ea3c17d47615251e2f9a98f8ee4fccff2e00",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth.",
+        "Crossed-out or edited entry visible: adjudicate which entries remain active before labelling."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "18",
+      "retain_box": [
+        294,
+        19,
+        795,
+        552
+      ],
+      "redactions": [],
+      "image_size": [
+        795,
+        655
+      ],
+      "source_image_sha256": "5fc4c7bde5c19b82b05ef6aa7434f9d7df2fe97a3a87c6775465fbb3df965686",
+      "source_review_sha256": "dc4f8288f787caf9fa05ae562ef8ff6f1e9a9f54bf68d1f185ef97d78fda7dab",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "19",
+      "retain_box": [
+        396,
+        89,
+        810,
+        473
+      ],
+      "redactions": [],
+      "image_size": [
+        810,
+        726
+      ],
+      "source_image_sha256": "183f2da78e2326a43823dd511fffc2793a181274250cc638bafee79d8ad96afb",
+      "source_review_sha256": "1a6f92dfdbd697de66ff87cefdd6fd53423116f5a9cfb9f92dadf8824139f723",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "20",
+      "retain_box": [
+        445,
+        47,
+        1045,
+        367
+      ],
+      "redactions": [],
+      "image_size": [
+        1045,
+        993
+      ],
+      "source_image_sha256": "8bdcf444892d33d590480d888b80d3bb25d0315c6de9e4c11bcac173aa2ec6af",
+      "source_review_sha256": "c89761a426cf4aa280c6b8301f14a081a69e4e9675e91979529f2632e1b44431",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth.",
+        "Crossed-out or edited entry visible: adjudicate which entries remain active before labelling.",
+        "Handwritten replacement beside the crossed-out printed medicine is not covered by its original medicine box; add a region if retaining it."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "21",
+      "retain_box": [
+        275,
+        83,
+        686,
+        478
+      ],
+      "redactions": [],
+      "image_size": [
+        686,
+        520
+      ],
+      "source_image_sha256": "2fe5bdd7c354457d914de1d7c2dcbe3cc31f9e32cd2b968eb707507bb4747932",
+      "source_review_sha256": "1cd72ee93d7c6d5c5433d11f03943b52f2bcfe533b0dbc6308da5473e1c24ac8",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    },
+    {
+      "page_id": "22",
+      "retain_box": [
+        469,
+        164,
+        899,
+        897
+      ],
+      "redactions": [],
+      "image_size": [
+        899,
+        1024
+      ],
+      "source_image_sha256": "ed20d2593e7b397e03a16f74ed611b46f544c793499fbf3ae966ef4231272b76",
+      "source_review_sha256": "3a6ba2e3e1968975831b07877c56a4b46ef6ecbf607397d1df49a8a52d76f2fe",
+      "review_notes": [
+        "Verify exact medicine spelling and strengths; do not infer from the model output.",
+        "Schedules in this retained block may be Bangla, abbreviated or incomplete; not annotated as English schedule ground truth."
+      ],
+      "privacy_screen": "Assistant visually inspected the retained block; independent privacy review remains pending."
+    }
+  ]
+}

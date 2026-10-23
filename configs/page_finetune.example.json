@@ -1,0 +1,19 @@
+{
+  "model_id": "checkpoints/trocr_base_rxhandbd/best",
+  "model_revision": null,
+  "dataset_root": "Dataset/IndianPrescriptionCrops",
+  "output_dir": "checkpoints/trocr_indian_pages",
+  "max_target_length": 32,
+  "epochs": 12,
+  "learning_rate": 1e-05,
+  "batch_size": 1,
+  "gradient_accumulation_steps": 16,
+  "seed": 42,
+  "eval_strategy": "steps",
+  "eval_steps": 100,
+  "save_steps": 100,
+  "warmup_ratio": 0.1,
+  "weight_decay": 0.01,
+  "early_stopping_patience": 5,
+  "dataset_format": "reviewed_pages"
+}

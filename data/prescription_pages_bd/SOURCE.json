@@ -1,0 +1,31 @@
+{
+  "title": "A Curated Bangladesh-Based Dataset of Handwritten and Printed Prescription Images",
+  "authors": [
+    "Dipto saha",
+    "Sourav Debnath",
+    "Anirban Roy"
+  ],
+  "doi": "10.17632/k62rfd23kz.2",
+  "version": 2,
+  "published": "2026-03-27",
+  "source_url": "https://data.mendeley.com/datasets/k62rfd23kz/2",
+  "download_url": "https://data.mendeley.com/public-files/datasets/k62rfd23kz/files/28517918-d3a5-4416-a607-6fcf7529e289/file_downloaded",
+  "license": "CC-BY-4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "archive_sha256": "ced4394523998386b274e549469c144fa9718402b4c52764552914182bb331db",
+  "archive_bytes": 21829651,
+  "expected_pages": 200,
+  "expected_boxes": 1086,
+  "source_class_id": 1,
+  "derived_class_id": 0,
+  "country": "Bangladesh",
+  "purpose": "Supplementary medicine-region localization and transcription annotation",
+  "publisher_claims_deidentified": true,
+  "independently_deidentified": false,
+  "limitations": [
+    "Not a representative Indian prescription benchmark",
+    "No medicine transcription or schedule relationship ground truth",
+    "No writer or clinic grouping metadata",
+    "Sampled pages retain signatures or stamps; review/redact every page before training or redistribution"
+  ]
+}

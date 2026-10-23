@@ -1,4 +1,5 @@
 """Build a self-contained Colab notebook from the current reviewed training code."""
+
 import base64
 import hashlib
 import io
@@ -8,30 +9,69 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 
+
 def build():
-    names = ['scripts/__init__.py','scripts/train.py','scripts/evaluate.py','scripts/prepare_rxhandbd.py',
-             'src/__init__.py','src/prescription/__init__.py','src/prescription/data.py',
-             'src/prescription/ocr.py','src/prescription/metrics.py',
-             'src/prescription/progress.py','src/prescription/training_progress.py',
-             'src/prescription/notebook_runner.py','src/prescription/layout.py',
-             'src/prescription/extraction.py','src/prescription/pipeline.py','src/prescription/knowledge.py',
-             'scripts/infer.py','scripts/lookup_medicine.py','examples/regions.json',
-             'configs/colab_base.json','configs/pipeline.json',
-             'data/rxhandbd/SOURCE.json','data/rxhandbd/publisher_metadata.json']
+    names = [
+        "scripts/prepare_page_crops.py",
+        "src/prescription/documents.py",
+        "src/prescription/page_review.py",
+        "scripts/__init__.py",
+        "scripts/train.py",
+        "scripts/evaluate.py",
+        "scripts/prepare_rxhandbd.py",
+        "src/__init__.py",
+        "src/prescription/__init__.py",
+        "src/prescription/data.py",
+        "src/prescription/ocr.py",
+        "src/prescription/metrics.py",
+        "src/prescription/progress.py",
+        "src/prescription/training_progress.py",
+        "src/prescription/notebook_runner.py",
+        "src/prescription/layout.py",
+        "src/prescription/extraction.py",
+        "src/prescription/pipeline.py",
+        "src/prescription/knowledge.py",
+        "scripts/infer.py",
+        "scripts/lookup_medicine.py",
+        "examples/regions.json",
+        "configs/colab_base.json",
+        "configs/pipeline.json",
+        "data/rxhandbd/SOURCE.json",
+        "data/rxhandbd/publisher_metadata.json",
+    ]
     # The dataset itself comes from the checksummed public publisher download.
     payload = io.BytesIO()
-    with zipfile.ZipFile(payload,'w',zipfile.ZIP_DEFLATED) as archive:
+    with zipfile.ZipFile(payload, "w", zipfile.ZIP_DEFLATED) as archive:
         for name in names:
-            path = ROOT/name
-            data = b'' if not path.exists() and name.endswith('__init__.py') else path.read_bytes()
-            archive.writestr(name,data)
+            path = ROOT / name
+            data = (
+                b""
+                if not path.exists() and name.endswith("__init__.py")
+                else path.read_bytes()
+            )
+            archive.writestr(name, data)
     encoded = base64.b64encode(payload.getvalue()).decode()
     digest = hashlib.sha256(payload.getvalue()).hexdigest()
-    hashes = json.loads((ROOT/'data/rxhandbd/split_sha256.json').read_text())
-    cells=[]
-    def md(s): cells.append({'cell_type':'markdown','metadata':{},'source':s.splitlines(True)})
-    def code(s): cells.append({'cell_type':'code','metadata':{},'source':s.splitlines(True),'execution_count':None,'outputs':[]})
-    md('''# Train TrOCR-base on RxHandBD
+    hashes = json.loads((ROOT / "data/rxhandbd/split_sha256.json").read_text())
+    cells = []
+
+    def md(s):
+        cells.append(
+            {"cell_type": "markdown", "metadata": {}, "source": s.splitlines(True)}
+        )
+
+    def code(s):
+        cells.append(
+            {
+                "cell_type": "code",
+                "metadata": {},
+                "source": s.splitlines(True),
+                "execution_count": None,
+                "outputs": [],
+            }
+        )
+
+    md("""# Train TrOCR-base on RxHandBD
 Version 2: live progress, streaming logs, and cancellation cleanup.
 **Run all starts real GPU training** after GPU selection and Drive authorization. No payment or subscription is requested.
 
@@ -50,8 +90,11 @@ We choose TrOCR-base-handwritten as a larger handwriting-specialized candidate. 
 **Stopped old run:** the default v2 run directory preserves v1 checkpoints. Do not delete or reset the runtime until you have checked for saved work. If an old detached training process still consumes GPU memory, use Colab runtime management to end that session before starting this notebook; interrupting v2 normally also stops its child process group.
 
 Sources: [Microsoft TrOCR](https://github.com/microsoft/unilm/tree/master/trocr), [base checkpoint](https://huggingface.co/microsoft/trocr-base-handwritten), [RxHandBD](https://zenodo.org/records/18478741), [Colab limits](https://research.google.com/colaboratory/faq.html).
-''')
-    code((ROOT/'src/prescription/notebook_runner.py').read_text() + '\n' + '''import sys, subprocess, os, json, hashlib, base64, io, zipfile
+""")
+    code(
+        (ROOT / "src/prescription/notebook_runner.py").read_text()
+        + "\n"
+        + """import sys, subprocess, os, json, hashlib, base64, io, zipfile
 from pathlib import Path
 import torch
 assert torch.cuda.is_available(), 'Select Runtime > Change runtime type > GPU, then rerun.'
@@ -60,8 +103,9 @@ print('VRAM GiB:', round(torch.cuda.get_device_properties(0).total_memory / 2**3
 assert tuple(int(x) for x in torch.__version__.split('+')[0].split('.')[:2]) >= (2, 6), 'Use a current Colab PyTorch runtime (2.6+).'
 run_live([sys.executable, '-u', '-m', 'pip', 'install', 'transformers==4.57.6', 'accelerate==1.15.0', 'sentencepiece==0.2.2', 'Pillow>=11,<13', 'requests>=2.32,<3', 'protobuf>=4,<8'], title='1. Installing dependencies', log_path='/content/rx_colab_install.log')
 # Keep the CUDA-enabled torch/torchvision pair supplied by Colab.
-''')
-    code('''from google.colab import drive
+"""
+    )
+    code("""from google.colab import drive
 drive.mount('/content/drive')
 RUN_NAME = 'trocr-base-rxhandbd-v2'  # Keep this to resume; change for a separate experiment.
 assert RUN_NAME and Path(RUN_NAME).name == RUN_NAME and RUN_NAME not in ('.','..')
@@ -70,8 +114,9 @@ RUN_DIR.mkdir(parents=True, exist_ok=True)
 PROJECT = Path('/content/medical_AI_colab')
 PROJECT.mkdir(parents=True, exist_ok=True)
 os.chdir(PROJECT)
-''')
-    code(f'''# Embedded, reviewed project snapshot; contains no credentials, images, or old checkpoints.
+""")
+    code(
+        f"""# Embedded, reviewed project snapshot; contains no credentials, images, or old checkpoints.
 BUNDLE = {encoded!r}
 BUNDLE_SHA256 = {digest!r}
 raw = base64.b64decode(BUNDLE)
@@ -90,8 +135,9 @@ else:
     receipt.write_text(BUNDLE_SHA256)
 def run(*args):
     return run_live([sys.executable, '-u', '-m', *map(str,args)], cwd=PROJECT, title=str(args[0]), log_path=RUN_DIR/'live.log')
-''')
-    code(f'''import requests
+"""
+    )
+    code(f"""import requests
 from tqdm.auto import tqdm
 source = json.loads((PROJECT/'data/rxhandbd/SOURCE.json').read_text())
 metadata = PROJECT/'publisher_metadata.json'
@@ -121,8 +167,8 @@ expected = {hashes!r}
 for split, expected_hash in expected.items():
     assert hashlib.sha256((DATA/f'{{split}}.csv').read_bytes()).hexdigest() == expected_hash, f'{{split}} differs from reviewed local split'
 print('All source images verified; frozen train/validation/test splits match the local project.')
-''')
-    code('''cfg = json.loads((PROJECT/'configs/colab_base.json').read_text())
+""")
+    code("""cfg = json.loads((PROJECT/'configs/colab_base.json').read_text())
 cfg['dataset_root'] = str(DATA)
 cfg['output_dir'] = str(RUN_DIR/'checkpoints')
 CONFIG = PROJECT/'configs/colab_runtime.json'
@@ -130,8 +176,9 @@ CONFIG.write_text(json.dumps(cfg,indent=2))
 # Batch 1 + accumulation 16 + fp16 + gradient checkpointing limit memory demand.
 # Up to 12 epochs, eval/save every 100 optimizer steps, early stop after 5 unimproved evaluations.
 run('scripts.train','--config',CONFIG,'--report',RUN_DIR/'preflight.json')
-''')
-    code('''# Full validation baselines. Each runs in a subprocess, releasing GPU memory afterwards.
+""")
+    code(
+        """# Full validation baselines. Each runs in a subprocess, releasing GPU memory afterwards.
 for label, config_path in [('small_pretrained',PROJECT/'configs/pipeline.json'),('base_pretrained',CONFIG)]:
     report = RUN_DIR/f'{label}_validation.json'
     if not report.exists():
@@ -141,8 +188,9 @@ for label, config_path in [('small_pretrained',PROJECT/'configs/pipeline.json'),
         path = PROJECT/f'{label}.json'
         path.write_text(json.dumps(baseline_cfg))
         run('scripts.evaluate','--config',path,'--device','cuda','--output',report)
-''')
-    code('''# This cell STARTS TRAINING. No additional RUN_TRAINING switch is required.
+"""
+    )
+    code("""# This cell STARTS TRAINING. No additional RUN_TRAINING switch is required.
 output = Path(cfg['output_dir'])
 if (output/'training_complete.json').exists():
     print('This run already completed; proceeding to validation. Change RUN_NAME for a new run.')
@@ -156,8 +204,8 @@ else:
         print('Resuming',resume)
         args += ['--resume',resume]
     run(*args)
-''')
-    code('''trained_report = RUN_DIR/'base_finetuned_validation.json'
+""")
+    code("""trained_report = RUN_DIR/'base_finetuned_validation.json'
 run('scripts.evaluate','--config',CONFIG,'--model',output/'best','--device','cuda','--output',trained_report)
 reports = {name:json.loads((RUN_DIR/f'{name}_validation.json').read_text())['metrics'] for name in ['small_pretrained','base_pretrained','base_finetuned']}
 for name, metric in reports.items():
@@ -168,22 +216,22 @@ comparison = {'metric':'normalized_cer','lower_is_better':True,'improved_vs_exis
 print('Measured improvement over existing pretrained small:',improved)
 print('Saved model + processor:',output/'best')
 print('Keep this folder together for local inference; reports and checkpoints are in:',RUN_DIR)
-''')
-    md('''## Optional final test, after model selection
+""")
+    md("""## Optional final test, after model selection
 Leave disabled while comparing models/hyperparameters. The held-out test is not used to choose a model. To use the result locally, copy the entire `checkpoints/best` folder (including processor/tokenizer) from Drive into your project and launch `python -m app.gradio_app --model path/to/best`.
 
 If Colab disconnects: reconnect to a GPU and rerun all cells with the same RUN_NAME. Completed checkpoints resume; a partially written checkpoint is ignored. Progress since the last checkpoint can be lost. Do not run the same RUN_NAME simultaneously in two runtimes.
-''')
-    code('''RUN_FINAL_TEST = False
+""")
+    code("""RUN_FINAL_TEST = False
 if RUN_FINAL_TEST:
     run('scripts.evaluate','--config',CONFIG,'--model',output/'best','--split','test','--device','cuda','--output',RUN_DIR/'final_test.json')
 else:
     print('Held-out test remains untouched.')
-''')
+""")
     md("""## Try the trained reader (optional)
 Upload a medicine word crop or a page with a matching regions JSON. Review every OCR result. Automatic page detection requires the separate optional Paddle dependencies; manual regions avoid extra installs. Nothing uploads until you enable the cell. General uses lookup below sends only the spelling you explicitly enter to NLM.
 """)
-    code('''TRY_IMAGE = False
+    code("""TRY_IMAGE = False
 if TRY_IMAGE:
     from google.colab import files
     from PIL import Image
@@ -198,8 +246,9 @@ if TRY_IMAGE:
     run(*args)
 else:
     print('Optional image upload disabled.')
-''')
-    code('''CONFIRMED_MEDICINE = ''  # Enter spelling only after checking the original image.
+""")
+    code(
+        """CONFIRMED_MEDICINE = ''  # Enter spelling only after checking the original image.
 SELECTED_LABEL_ID = ''   # Choose a matching label ID from the first lookup result.
 if CONFIRMED_MEDICINE.strip():
     args = ['scripts.lookup_medicine','--confirmed-name',CONFIRMED_MEDICINE]
@@ -207,11 +256,12 @@ if CONFIRMED_MEDICINE.strip():
     run(*args)
 else:
     print('No medicine name entered; no external lookup sent.')
-''')
+"""
+    )
     md("""## Download the trained model
 The full model and processor are already in Drive under this run's checkpoints/best directory. This optional cell exports a ZIP to your computer. Keep all processor/tokenizer files. Launch the existing local app with `python -m app.gradio_app --model path/to/best`.
 """)
-    code('''DOWNLOAD_MODEL = False
+    code("""DOWNLOAD_MODEL = False
 if DOWNLOAD_MODEL:
     import shutil
     from google.colab import files
@@ -220,20 +270,55 @@ if DOWNLOAD_MODEL:
     files.download(bundle)
 else:
     print('Model export optional; checkpoints remain in Drive.')
-''')
-    titles = iter(['GPU and live dependency setup','Persistent Drive storage','Load the project snapshot','Download and verify RxHandBD','Training configuration and preflight','Measure pretrained baselines','Fine-tune with live progress','Compare validation results'])
-    expanded=[]
+""")
+    titles = iter(
+        [
+            "GPU and live dependency setup",
+            "Persistent Drive storage",
+            "Load the project snapshot",
+            "Download and verify RxHandBD",
+            "Training configuration and preflight",
+            "Measure pretrained baselines",
+            "Fine-tune with live progress",
+            "Compare validation results",
+        ]
+    )
+    expanded = []
     for c in cells:
-        if c['cell_type']=='code':
-            title=next(titles,None)
-            if title:expanded.append({'cell_type':'markdown','metadata':{},'source':['## '+title+'\n']})
+        if c["cell_type"] == "code":
+            title = next(titles, None)
+            if title:
+                expanded.append(
+                    {
+                        "cell_type": "markdown",
+                        "metadata": {},
+                        "source": ["## " + title + "\n"],
+                    }
+                )
         expanded.append(c)
-    cells=expanded
-    for i,c in enumerate(cells):c['id']=f'colab-base-{i:02d}'
-    nb={'cells':cells,'metadata':{'accelerator':'GPU','colab':{'name':'RxHandBD_TrOCR_Base_Colab.ipynb','provenance':[]},'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},'language_info':{'name':'python'}},'nbformat':4,'nbformat_minor':5}
-    target=ROOT/'notebooks/RxHandBD_TrOCR_Base_Colab.ipynb'
-    target.write_text(json.dumps(nb,indent=2)+'\n',encoding='utf-8')
-    print(target, target.stat().st_size, 'bytes')
+    cells = expanded
+    for i, c in enumerate(cells):
+        c["id"] = f"colab-base-{i:02d}"
+    nb = {
+        "cells": cells,
+        "metadata": {
+            "accelerator": "GPU",
+            "colab": {"name": "RxHandBD_TrOCR_Base_Colab.ipynb", "provenance": []},
+            "kernelspec": {
+                "display_name": "Python 3",
+                "language": "python",
+                "name": "python3",
+            },
+            "language_info": {"name": "python"},
+        },
+        "nbformat": 4,
+        "nbformat_minor": 5,
+    }
+    target = ROOT / "notebooks/RxHandBD_TrOCR_Base_Colab.ipynb"
+    target.write_text(json.dumps(nb, indent=2) + "\n", encoding="utf-8")
+    print(target, target.stat().st_size, "bytes")
     return target
 
-if __name__=='__main__':build()
+
+if __name__ == "__main__":
+    build()

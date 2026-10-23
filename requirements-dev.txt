@@ -1,0 +1,2 @@
+# Optional: keep Python formatting consistent while editing.
+black==26.5.1

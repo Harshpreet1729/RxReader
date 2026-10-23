@@ -1,0 +1,12 @@
+{
+  "permission_confirmed": false,
+  "deidentified": false,
+  "documents": [
+    {
+      "image": "prescription.png",
+      "review": "prescription-review.json",
+      "group": "writer-or-clinic-group-01",
+      "split": "train"
+    }
+  ]
+}

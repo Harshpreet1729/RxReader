@@ -1,0 +1,6 @@
+{% load static %}<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,"><title>RxReader · Prescription workspace</title><link rel="stylesheet" href="{% static 'reader.css' %}"></head>
+<body><header><a class="brand" href="{% url 'home' %}">Rx / Reader</a><span>Prescription workspace</span></header>
+<main>{% block content %}{% endblock %}</main>
+<footer>Check every reading against the prescription. This prototype can misread names and instructions. Images stay in this local process; jobs expire after 30 minutes. Confirmed medicine names are sent to NLM only when you choose lookup.</footer>
+{% block scripts %}{% endblock %}</body></html>

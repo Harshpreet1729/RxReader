@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block content %}
+<h1>Read a prescription.</h1><p class="intro">Upload a page, review the medicine names, and check the instructions written beside them.</p>
+<section class="panel upload"><h2>1. Add your prescription</h2><p>JPG, PNG, WebP or single-page PDF · up to 10 MB. Start with a clear, upright photograph.</p>
+<form method="post" enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}<button type="submit">Open prescription</button></form>
+<p class="muted">Uncheck automatic reading to review manually. With a saved review, existing readings and corrections are preserved. Only empty regions are read. Handwriting quality varies; the model was trained on word crops.</p></section>
+<section><h2>What happens next</h2><ol class="steps"><li>Locate and read the text.</li><li>Correct readings and link instructions to each medicine.</li><li>Confirm a name to look up published uses.</li></ol></section>
+{% endblock %}
